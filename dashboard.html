@@ -1,0 +1,469 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard | Auction Arena</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #2563eb;
+            --primary-dark: #1d4ed8;
+            --accent: #f59e0b;
+            --danger: #ef4444;
+            --success: #10b981;
+            --dark: #1e293b;
+            --light: #f8fafc;
+            --glass: rgba(255, 255, 255, 0.15);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Inter', sans-serif;
+        }
+
+        body {
+            min-height: 100vh;
+            color: white;
+            background: url('../images/bg.png') center/cover no-repeat;
+            position: relative;
+            overflow-x: hidden;
+        }
+
+        .bg-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.6);
+            backdrop-filter: blur(5px);
+            z-index: -1;
+        }
+
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 2rem;
+            background: var(--glass);
+            backdrop-filter: blur(10px);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 700;
+        }
+
+        .user-info {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .user-avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            object-fit: cover;
+        }
+
+        .budget-display {
+            background: rgba(0, 0, 0, 0.3);
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            font-weight: 600;
+        }
+
+        .container {
+            display: flex;
+            min-height: calc(100vh - 72px);
+            padding: 2rem;
+        }
+
+        .sidebar {
+            width: 250px;
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin-right: 2rem;
+        }
+
+        .main-content {
+            flex: 1;
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 12px;
+            padding: 2rem;
+        }
+
+        .btn {
+            padding: 0.75rem 1.5rem;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .btn-primary {
+            background: var(--primary);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: var(--primary-dark);
+            transform: translateY(-2px);
+        }
+
+        .btn-accent {
+            background: var(--accent);
+            color: var(--dark);
+        }
+
+        .btn-accent:hover {
+            background: #e69009;
+        }
+
+        .section-title {
+            font-size: 1.5rem;
+            margin-bottom: 1.5rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 2px solid var(--primary);
+        }
+
+        .room-card {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 8px;
+            padding: 1.5rem;
+            margin-bottom: 1rem;
+            transition: all 0.3s ease;
+        }
+
+        .room-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+        }
+
+        .room-title {
+            font-size: 1.2rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .room-meta {
+            display: flex;
+            gap: 1rem;
+            color: rgba(255, 255, 255, 0.7);
+            font-size: 0.9rem;
+            margin-bottom: 1rem;
+        }
+
+        .room-actions {
+            display: flex;
+            gap: 1rem;
+        }
+
+        .nav-dock {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            background: rgba(0, 0, 0, 0.7);
+            backdrop-filter: blur(10px);
+            display: flex;
+            justify-content: space-around;
+            padding: 1rem 0;
+            z-index: 100;
+        }
+
+        .nav-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            color: rgba(255, 255, 255, 0.7);
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+
+        .nav-item:hover {
+            color: white;
+            transform: scale(1.1);
+        }
+
+        .nav-item i {
+            font-size: 1.5rem;
+            margin-bottom: 0.25rem;
+        }
+
+        .nav-item.active {
+            color: var(--primary);
+        }
+
+        .create-room-form {
+            background: rgba(0, 0, 0, 0.3);
+            padding: 2rem;
+            border-radius: 12px;
+            margin-top: 2rem;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 0.75rem;
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 8px;
+            color: white;
+            font-size: 1rem;
+        }
+
+        .form-control:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 2px rgba(37, 99, 235, 0.3);
+        }
+
+        .league-selector {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+
+        .league-option {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 8px;
+            padding: 1rem;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .league-option:hover {
+            background: rgba(255, 255, 255, 0.2);
+        }
+
+        .league-option.selected {
+            background: var(--primary);
+            box-shadow: 0 0 0 2px rgba(37, 99, 235, 0.5);
+        }
+
+        .league-option img {
+            width: 50px;
+            height: 50px;
+            object-fit: contain;
+            margin-bottom: 0.5rem;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                flex-direction: column;
+                padding: 1rem;
+            }
+
+            .sidebar {
+                width: 100%;
+                margin-right: 0;
+                margin-bottom: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Background Overlay -->
+    <div class="bg-overlay"></div>
+
+    <!-- Header -->
+    <header>
+        <div class="logo">Auction Arena</div>
+        <div class="user-info">
+            <div class="budget-display">€1,000,000,000</div>
+            <img src="https://via.placeholder.com/40" alt="User" class="user-avatar">
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <div class="container">
+        <div class="sidebar">
+            <h3 class="section-title">My Rooms</h3>
+            <div class="room-card">
+                <h4 class="room-title">Premier League Auction</h4>
+                <div class="room-meta">
+                    <span>5 players left</span>
+                    <span>€750M remaining</span>
+                </div>
+                <div class="room-actions">
+                    <button class="btn btn-primary">Join</button>
+                </div>
+            </div>
+            <div class="room-card">
+                <h4 class="room-title">La Liga Draft</h4>
+                <div class="room-meta">
+                    <span>Completed</span>
+                    <span>Team ready</span>
+                </div>
+                <div class="room-actions">
+                    <button class="btn btn-accent">View Team</button>
+                </div>
+            </div>
+
+            <div class="create-room-form">
+                <h3 class="section-title">Create Room</h3>
+                <div class="form-group">
+                    <label class="form-label">Room Name</label>
+                    <input type="text" class="form-control" placeholder="Enter room name">
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Select League</label>
+                    <div class="league-selector">
+                        <div class="league-option selected">
+                            <img src="https://via.placeholder.com/50x50?text=PL" alt="Premier League">
+                            <div>Premier League</div>
+                        </div>
+                        <div class="league-option">
+                            <img src="https://via.placeholder.com/50x50?text=LL" alt="La Liga">
+                            <div>La Liga</div>
+                        </div>
+                        <div class="league-option">
+                            <img src="https://via.placeholder.com/50x50?text=SA" alt="Serie A">
+                            <div>Serie A</div>
+                        </div>
+                        <div class="league-option">
+                            <img src="https://via.placeholder.com/50x50?text=BL" alt="Bundesliga">
+                            <div>Bundesliga</div>
+                        </div>
+                    </div>
+                </div>
+                <button class="btn btn-primary btn-block">
+                    <i class="fas fa-plus"></i> Create Auction Room
+                </button>
+            </div>
+        </div>
+
+        <div class="main-content">
+            <h2 class="section-title">Active Auctions</h2>
+            
+            <div class="room-card">
+                <h4 class="room-title">Premier League Mega Auction</h4>
+                <div class="room-meta">
+                    <span>Code: PL2023</span>
+                    <span>8/10 players</span>
+                    <span>12 participants</span>
+                </div>
+                <div class="room-actions">
+                    <button class="btn btn-primary">Join Room</button>
+                    <button class="btn btn-accent">Copy Code</button>
+                </div>
+            </div>
+
+            <div class="room-card">
+                <h4 class="room-title">Champions League Showdown</h4>
+                <div class="room-meta">
+                    <span>Code: CL2023</span>
+                    <span>5/10 players</span>
+                    <span>8 participants</span>
+                </div>
+                <div class="room-actions">
+                    <button class="btn btn-primary">Join Room</button>
+                    <button class="btn btn-accent">Copy Code</button>
+                </div>
+            </div>
+
+            <div class="room-card">
+                <h4 class="room-title">World Cup Stars</h4>
+                <div class="room-meta">
+                    <span>Code: WC2023</span>
+                    <span>2/10 players</span>
+                    <span>15 participants</span>
+                </div>
+                <div class="room-actions">
+                    <button class="btn btn-primary">Join Room</button>
+                    <button class="btn btn-accent">Copy Code</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bottom Navigation Dock -->
+    <div class="nav-dock">
+        <a href="home.html" class="nav-item">
+            <i class="fas fa-home"></i>
+            <span>Home</span>
+        </a>
+        <a href="auction.html" class="nav-item active">
+            <i class="fas fa-gavel"></i>
+            <span>Auction</span>
+        </a>
+        <a href="friends.html" class="nav-item">
+            <i class="fas fa-users"></i>
+            <span>Friends</span>
+        </a>
+        <a href="profile.html" class="nav-item">
+            <i class="fas fa-user"></i>
+            <span>Profile</span>
+        </a>
+    </div>
+
+    <!-- Firebase Scripts -->
+    <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-database-compat.js"></script>
+    <script>
+        // Firebase Configuration
+        const firebaseConfig = {
+            apiKey: "AIzaSyAvtdt5lozNDmxcDS-IfBN5E6x-ITrp3Mo",
+            authDomain: "auctionarena07.firebaseapp.com",
+            projectId: "auctionarena07",
+            storageBucket: "auctionarena07.appspot.com",
+            messagingSenderId: "971412380623",
+            appId: "1:971412380623:web:22898603bfe50028cbd0ba"
+        };
+
+        // Initialize Firebase
+        firebase.initializeApp(firebaseConfig);
+        const auth = firebase.auth();
+        const database = firebase.database();
+
+        // League selection
+        document.querySelectorAll('.league-option').forEach(option => {
+            option.addEventListener('click', function() {
+                document.querySelectorAll('.league-option').forEach(el => {
+                    el.classList.remove('selected');
+                });
+                this.classList.add('selected');
+            });
+        });
+
+        // User authentication state
+        auth.onAuthStateChanged(user => {
+            if (!user) {
+                window.location.href = 'login.html';
+            } else {
+                // Load user data
+                database.ref('users/' + user.uid).once('value').then(snapshot => {
+                    const userData = snapshot.val();
+                    document.querySelector('.user-avatar').src = userData.photoURL || 'https://via.placeholder.com/40';
+                    document.querySelector('.budget-display').textContent = `€${userData.budget?.toLocaleString() || '1,000,000,000'}`;
+                });
+            }
+        });
+    </script>
+</body>
+</html>
