@@ -3,83 +3,293 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>My Profile | Auction Arena</title>
-    <link rel="stylesheet" href="css/main.css">
+    <title>Profile | Auction Arena</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/styles.css">
 </head>
 <body>
-    <nav class="glass-nav">
-        <div class="nav-brand">
-            <i class="fas fa-futbol"></i>
-            <span>Auction Arena</span>
-        </div>
-        <div class="nav-links">
-            <a href="index.html" class="nav-link"><i class="fas fa-home"></i> Home</a>
-            <a href="rooms.html" class="nav-link"><i class="fas fa-door-open"></i> Rooms</a>
-            <div id="userSection">
-                <a href="profile.html" class="nav-link active" id="profileLink">
-                    <img src="images/default-avatar.png" alt="User" class="avatar">
-                    Profile
-                </a>
-                <button class="btn-danger" id="logoutBtn"><i class="fas fa-sign-out-alt"></i> Logout</button>
-            </div>
-        </div>
-    </nav>
+    <!-- Background Overlay -->
+    <div class="bg-overlay"></div>
 
-    <main class="profile-container">
-        <div class="profile-header">
-            <div class="profile-avatar">
-                <img src="images/default-avatar.png" alt="Profile" id="profileAvatar">
-                <button class="btn-outline" id="changeAvatar">
-                    <i class="fas fa-camera"></i> Change
+    <!-- Header -->
+    <header>
+        <div class="logo">Auction Arena</div>
+        <div class="user-info">
+            <span id="userBudget">€1,000,000,000</span>
+            <img id="userAvatar" src="https://via.placeholder.com/40" alt="User" class="user-avatar">
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <div class="container">
+        <div class="card">
+            <div class="profile-header">
+                <div class="avatar-container">
+                    <img id="profileAvatar" src="https://via.placeholder.com/120" alt="Profile" class="profile-avatar">
+                    <input type="file" id="avatarUpload" accept="image/*" style="display: none;">
+                </div>
+                <div class="profile-details">
+                    <h1 id="profileName" class="profile-name">John Doe</h1>
+                    <div id="profileUsername" class="profile-username">@johndoe</div>
+                    <div class="profile-stats">
+                        <div class="stat-item">
+                            <div id="friendsCount" class="stat-value">42</div>
+                            <div class="stat-label">Friends</div>
+                        </div>
+                        <div class="stat-item">
+                            <div id="teamsCount" class="stat-value">5</div>
+                            <div class="stat-label">Teams</div>
+                        </div>
+                        <div class="stat-item">
+                            <div id="auctionsCount" class="stat-value">12</div>
+                            <div class="stat-label">Auctions</div>
+                        </div>
+                    </div>
+                </div>
+                <button id="editProfileBtn" class="btn btn-outline edit-btn">
+                    <i class="fas fa-edit"></i> Edit Profile
                 </button>
             </div>
-            <div class="profile-info">
-                <h1 id="profileName">Loading...</h1>
-                <p id="profileEmail"></p>
-                <div class="profile-stats">
-                    <div class="stat">
-                        <span class="value" id="roomsJoined">0</span>
-                        <span class="label">Rooms Joined</span>
-                    </div>
-                    <div class="stat">
-                        <span class="value" id="playersWon">0</span>
-                        <span class="label">Players Won</span>
-                    </div>
-                    <div class="stat">
-                        <span class="value" id="totalBids">0</span>
-                        <span class="label">Total Bids</span>
-                    </div>
+        </div>
+
+        <div class="card">
+            <h2 class="section-title">Account Settings</h2>
+            <form id="profileForm" style="display: none;">
+                <div class="form-group">
+                    <label class="form-label">Display Name</label>
+                    <input type="text" id="displayName" class="form-control" required>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Username</label>
+                    <input type="text" id="username" class="form-control" required>
+                    <small id="usernameError" style="color: var(--danger); display: none;">Username already taken</small>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Email</label>
+                    <input type="email" id="email" class="form-control" disabled>
+                </div>
+                <div class="form-group">
+                    <button type="submit" class="btn btn-primary">
+                        <i class="fas fa-save"></i> Save Changes
+                    </button>
+                    <button type="button" id="cancelEditBtn" class="btn btn-outline">
+                        Cancel
+                    </button>
+                </div>
+            </form>
+
+            <div id="profileView">
+                <div class="form-group">
+                    <label class="form-label">Display Name</label>
+                    <div class="form-control-static" id="viewDisplayName">John Doe</div>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Username</label>
+                    <div class="form-control-static" id="viewUsername">@johndoe</div>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Email</label>
+                    <div class="form-control-static" id="viewEmail">john.doe@example.com</div>
                 </div>
             </div>
         </div>
 
-        <div class="profile-content">
-            <div class="profile-section">
-                <h2>My Players</h2>
-                <div class="players-grid" id="myPlayers">
-                    <!-- Won players will appear here -->
-                    <div class="empty-state">
-                        <i class="fas fa-search"></i>
-                        <p>You haven't won any players yet</p>
-                    </div>
+        <div class="card">
+            <h2 class="section-title">Recent Activity</h2>
+            <div id="activityFeed">
+                <div class="activity-item">
+                    <i class="fas fa-gavel"></i>
+                    <span>Won bid for Lionel Messi (€120M)</span>
+                    <small>2 hours ago</small>
                 </div>
-            </div>
-
-            <div class="profile-section">
-                <h2>Recent Activity</h2>
-                <div class="activity-list" id="activityFeed">
-                    <!-- Activity will appear here -->
+                <div class="activity-item">
+                    <i class="fas fa-users"></i>
+                    <span>Added friend @footballfan</span>
+                    <small>1 day ago</small>
+                </div>
+                <div class="activity-item">
+                    <i class="fas fa-trophy"></i>
+                    <span>Completed Premier League auction</span>
+                    <small>3 days ago</small>
                 </div>
             </div>
         </div>
-    </main>
+    </div>
 
-    <div id="notificationContainer"></div>
+    <!-- Bottom Navigation Dock -->
+    <div class="nav-dock">
+        <a href="home.html" class="nav-item">
+            <i class="fas fa-home"></i>
+            <span>Home</span>
+        </a>
+        <a href="auction.html" class="nav-item">
+            <i class="fas fa-gavel"></i>
+            <span>Auction</span>
+        </a>
+        <a href="friends.html" class="nav-item">
+            <i class="fas fa-users"></i>
+            <span>Friends</span>
+        </a>
+        <a href="profile.html" class="nav-item active">
+            <i class="fas fa-user"></i>
+            <span>Profile</span>
+        </a>
+    </div>
 
-    <script src="js/firebase.js"></script>
-    <script src="js/auth.js"></script>
-    <script src="js/profile.js"></script>
-    <script src="js/notifications.js"></script>
+    <!-- Firebase Scripts -->
+    <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-database-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-storage-compat.js"></script>
+    <script>
+        // Firebase Configuration
+        const firebaseConfig = {
+            apiKey: "AIzaSyAvtdt5lozNDmxcDS-IfBN5E6x-ITrp3Mo",
+            authDomain: "auctionarena07.firebaseapp.com",
+            projectId: "auctionarena07",
+            storageBucket: "auctionarena07.appspot.com",
+            messagingSenderId: "971412380623",
+            appId: "1:971412380623:web:22898603bfe50028cbd0ba"
+        };
+
+        // Initialize Firebase
+        firebase.initializeApp(firebaseConfig);
+        const auth = firebase.auth();
+        const database = firebase.database();
+        const storage = firebase.storage();
+
+        // DOM Elements
+        const profileForm = document.getElementById('profileForm');
+        const profileView = document.getElementById('profileView');
+        const editProfileBtn = document.getElementById('editProfileBtn');
+        const cancelEditBtn = document.getElementById('cancelEditBtn');
+        const avatarUpload = document.getElementById('avatarUpload');
+        const profileAvatar = document.getElementById('profileAvatar');
+        const userAvatar = document.getElementById('userAvatar');
+
+        // Toggle edit mode
+        editProfileBtn.addEventListener('click', () => {
+            profileView.style.display = 'none';
+            profileForm.style.display = 'block';
+        });
+
+        cancelEditBtn.addEventListener('click', () => {
+            profileForm.style.display = 'none';
+            profileView.style.display = 'block';
+        });
+
+        // Avatar upload
+        profileAvatar.addEventListener('click', () => {
+            if (profileForm.style.display === 'block') {
+                avatarUpload.click();
+            }
+        });
+
+        avatarUpload.addEventListener('change', (e) => {
+            const file = e.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = (event) => {
+                    profileAvatar.src = event.target.result;
+                    userAvatar.src = event.target.result;
+                }
+                reader.readAsDataURL(file);
+                
+                // Upload to Firebase Storage
+                const userId = auth.currentUser.uid;
+                const storageRef = storage.ref(`profile_images/${userId}`);
+                const uploadTask = storageRef.put(file);
+                
+                uploadTask.on('state_changed', 
+                    (snapshot) => {
+                        // Progress monitoring
+                    }, 
+                    (error) => {
+                        console.error("Upload error:", error);
+                    }, 
+                    () => {
+                        // Upload complete
+                        uploadTask.snapshot.ref.getDownloadURL().then((downloadURL) => {
+                            // Update user profile in database
+                            database.ref('users/' + userId).update({
+                                photoURL: downloadURL
+                            });
+                        });
+                    }
+                );
+            }
+        });
+
+        // Form submission
+        profileForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            const displayName = document.getElementById('displayName').value;
+            const username = document.getElementById('username').value;
+            const userId = auth.currentUser.uid;
+            
+            // Check username availability
+            database.ref('usernames').once('value').then(snapshot => {
+                if (snapshot.exists() && snapshot.val()[username] && snapshot.val()[username] !== userId) {
+                    document.getElementById('usernameError').style.display = 'block';
+                } else {
+                    // Update profile
+                    const updates = {
+                        displayName: displayName,
+                        username: username
+                    };
+                    
+                    // Update username mapping
+                    database.ref('usernames/' + username).set(userId);
+                    
+                    database.ref('users/' + userId).update(updates).then(() => {
+                        // Update view
+                        document.getElementById('viewDisplayName').textContent = displayName;
+                        document.getElementById('viewUsername').textContent = '@' + username;
+                        profileForm.style.display = 'none';
+                        profileView.style.display = 'block';
+                    });
+                }
+            });
+        });
+
+        // Load user data
+        auth.onAuthStateChanged(user => {
+            if (user) {
+                database.ref('users/' + user.uid).once('value').then(snapshot => {
+                    const userData = snapshot.val();
+                    
+                    // Set profile data
+                    document.getElementById('profileName').textContent = userData.displayName || 'User';
+                    document.getElementById('profileUsername').textContent = '@' + (userData.username || 'username');
+                    document.getElementById('viewDisplayName').textContent = userData.displayName || 'User';
+                    document.getElementById('viewUsername').textContent = '@' + (userData.username || 'username');
+                    document.getElementById('displayName').value = userData.displayName || '';
+                    document.getElementById('username').value = userData.username || '';
+                    document.getElementById('email').value = user.email;
+                    document.getElementById('viewEmail').textContent = user.email;
+                    
+                    if (userData.photoURL) {
+                        profileAvatar.src = userData.photoURL;
+                        userAvatar.src = userData.photoURL;
+                    }
+                    
+                    if (userData.budget) {
+                        document.getElementById('userBudget').textContent = '€' + userData.budget.toLocaleString();
+                    }
+                });
+                
+                // Load user stats
+                database.ref('user_stats/' + user.uid).once('value').then(snapshot => {
+                    const stats = snapshot.val() || {};
+                    document.getElementById('friendsCount').textContent = stats.friendsCount || 0;
+                    document.getElementById('teamsCount').textContent = stats.teamsCount || 0;
+                    document.getElementById('auctionsCount').textContent = stats.auctionsCount || 0;
+                });
+            } else {
+                window.location.href = 'login.html';
+            }
+        });
+    </script>
 </body>
 </html>
