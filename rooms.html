@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Auction Rooms | FootBid</title>
+    <link rel="stylesheet" href="css/main.css">
+    <link rel="stylesheet" href="css/animations.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <nav class="glass-nav">
+        <div class="nav-brand">
+            <i class="fas fa-futbol"></i>
+            <span>FootBid</span>
+        </div>
+        <div class="nav-links">
+            <a href="index.html" class="nav-link"><i class="fas fa-home"></i> Home</a>
+            <a href="rooms.html" class="nav-link active"><i class="fas fa-door-open"></i> Rooms</a>
+            <div id="userSection">
+                <a href="profile.html" class="nav-link" id="profileLink">
+                    <img src="images/default-avatar.png" alt="User" class="avatar">
+                    Profile
+                </a>
+                <button class="btn-danger" id="logoutBtn"><i class="fas fa-sign-out-alt"></i> Logout</button>
+            </div>
+        </div>
+        <button class="hamburger" id="hamburger">
+            <i class="fas fa-bars"></i>
+        </button>
+    </nav>
+
+    <main class="container">
+        <div class="page-header">
+            <h1>Auction Rooms</h1>
+            <button class="btn-primary" id="createRoomBtn">
+                <i class="fas fa-plus"></i> Create Room
+            </button>
+        </div>
+
+        <div class="rooms-grid" id="roomsContainer">
+            <!-- Rooms will be loaded here -->
+            <div class="room-card skeleton"></div>
+            <div class="room-card skeleton"></div>
+            <div class="room-card skeleton"></div>
+        </div>
+    </main>
+
+    <div id="notificationContainer"></div>
+
+    <script src="js/firebase.js"></script>
+    <script src="js/auth.js"></script>
+    <script src="js/rooms.js"></script>
+    <script src="js/notifications.js"></script>
+</body>
+</html>

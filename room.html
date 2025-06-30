@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Auction Room | FootBid</title>
+    <link rel="stylesheet" href="css/main.css">
+    <link rel="stylesheet" href="css/animations.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <nav class="glass-nav">
+        <div class="nav-brand">
+            <i class="fas fa-futbol"></i>
+            <span>FootBid</span>
+        </div>
+        <div class="nav-links">
+            <a href="index.html" class="nav-link"><i class="fas fa-home"></i> Home</a>
+            <a href="rooms.html" class="nav-link"><i class="fas fa-door-open"></i> Rooms</a>
+            <div id="userSection">
+                <a href="profile.html" class="nav-link" id="profileLink">
+                    <img src="images/default-avatar.png" alt="User" class="avatar">
+                    Profile
+                </a>
+                <button class="btn-danger" id="logoutBtn"><i class="fas fa-sign-out-alt"></i> Logout</button>
+            </div>
+        </div>
+    </nav>
+
+    <main class="room-container">
+        <div class="room-header">
+            <h1 id="roomName">Loading Room...</h1>
+            <div class="room-info">
+                <span class="budget" id="roomBudget">Budget: €100,000,000</span>
+                <span class="players" id="playerCount">Players: 0/10</span>
+            </div>
+        </div>
+
+        <div class="room-content">
+            <div class="player-auction">
+                <div class="player-card" id="currentPlayer">
+                    <div class="player-image">
+                        <img src="images/player-placeholder.png" alt="Current Player" id="playerImage">
+                    </div>
+                    <div class="player-details">
+                        <h2 id="playerName">No player selected</h2>
+                        <div class="player-stats">
+                            <div class="stat">
+                                <i class="fas fa-trophy"></i>
+                                <span id="playerRating">-</span>
+                            </div>
+                            <div class="stat">
+                                <i class="fas fa-tshirt"></i>
+                                <span id="playerPosition">-</span>
+                            </div>
+                            <div class="stat">
+                                <i class="fas fa-flag"></i>
+                                <span id="playerNationality">-</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="auction-controls">
+                    <div class="current-bid">
+                        <h3>Current Bid</h3>
+                        <div class="bid-amount" id="currentBid">€0</div>
+                        <div class="bid-leader" id="bidLeader">No bids yet</div>
+                    </div>
+
+                    <div class="bid-form">
+                        <div class="form-group">
+                            <label for="bidAmount">Your Bid (€)</label>
+                            <input type="number" id="bidAmount" min="0" step="100000">
+                        </div>
+                        <button class="btn-primary" id="placeBid">
+                            <i class="fas fa-gavel"></i> Place Bid
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="room-sidebar">
+                <div class="sidebar-section">
+                    <h3>Players in Room</h3>
+                    <div class="user-list" id="roomUsers">
+                        <!-- Users will be loaded here -->
+                    </div>
+                </div>
+                <div class="sidebar-section">
+                    <h3>Chat</h3>
+                    <div class="chat-messages" id="chatMessages">
+                        <!-- Messages will appear here -->
+                    </div>
+                    <div class="chat-input">
+                        <input type="text" id="chatInput" placeholder="Type your message...">
+                        <button id="sendMessage"><i class="fas fa-paper-plane"></i></button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <div id="notificationContainer"></div>
+
+    <script src="js/firebase.js"></script>
+    <script src="js/auth.js"></script>
+    <script src="js/player-auction.js"></script>
+    <script src="js/notifications.js"></script>
+</body>
+</html>

@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Profile | Auction Arena</title>
+    <link rel="stylesheet" href="css/main.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <nav class="glass-nav">
+        <div class="nav-brand">
+            <i class="fas fa-futbol"></i>
+            <span>Auction Arena</span>
+        </div>
+        <div class="nav-links">
+            <a href="index.html" class="nav-link"><i class="fas fa-home"></i> Home</a>
+            <a href="rooms.html" class="nav-link"><i class="fas fa-door-open"></i> Rooms</a>
+            <div id="userSection">
+                <a href="profile.html" class="nav-link active" id="profileLink">
+                    <img src="images/default-avatar.png" alt="User" class="avatar">
+                    Profile
+                </a>
+                <button class="btn-danger" id="logoutBtn"><i class="fas fa-sign-out-alt"></i> Logout</button>
+            </div>
+        </div>
+    </nav>
+
+    <main class="profile-container">
+        <div class="profile-header">
+            <div class="profile-avatar">
+                <img src="images/default-avatar.png" alt="Profile" id="profileAvatar">
+                <button class="btn-outline" id="changeAvatar">
+                    <i class="fas fa-camera"></i> Change
+                </button>
+            </div>
+            <div class="profile-info">
+                <h1 id="profileName">Loading...</h1>
+                <p id="profileEmail"></p>
+                <div class="profile-stats">
+                    <div class="stat">
+                        <span class="value" id="roomsJoined">0</span>
+                        <span class="label">Rooms Joined</span>
+                    </div>
+                    <div class="stat">
+                        <span class="value" id="playersWon">0</span>
+                        <span class="label">Players Won</span>
+                    </div>
+                    <div class="stat">
+                        <span class="value" id="totalBids">0</span>
+                        <span class="label">Total Bids</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="profile-content">
+            <div class="profile-section">
+                <h2>My Players</h2>
+                <div class="players-grid" id="myPlayers">
+                    <!-- Won players will appear here -->
+                    <div class="empty-state">
+                        <i class="fas fa-search"></i>
+                        <p>You haven't won any players yet</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="profile-section">
+                <h2>Recent Activity</h2>
+                <div class="activity-list" id="activityFeed">
+                    <!-- Activity will appear here -->
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <div id="notificationContainer"></div>
+
+    <script src="js/firebase.js"></script>
+    <script src="js/auth.js"></script>
+    <script src="js/profile.js"></script>
+    <script src="js/notifications.js"></script>
+</body>
+</html>
